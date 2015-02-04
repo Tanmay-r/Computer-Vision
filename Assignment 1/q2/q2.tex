@@ -1,0 +1,48 @@
+\title{Assignment 1: Question 2}
+\author{}
+\date{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage[margin=0.5in]{geometry}
+\setlength\parindent{0pt}
+
+\begin{document}
+\maketitle
+
+\textbf{Question:} In this exercise, we will prove the orthocenter theorem pertaining to the vanishing points $Q,R,S$ of three mutually perpendicular directions $OQ, OR, OS$, where $O$ is the pinhole (origin of camera coordinate system). Let the image plane be $Z = f$. Recall that two directions $v_1$ and $v_2$ are orthogonal if $v^T_1 v_2 = 0$. One can conclude that $OS$ is orthogonal to $OR-OQ$ (why?). Also the optical axis $Oo$ (where $o$ is the optical center) is orthogonal to $OR-OQ$ (why?). Hence the plane formed by triangle $OSo$ is orthogonal to $OR-OQ$ and hence line $oS$ is perpendicular to $OR-OQ = QR$ (why?). Likewise $oR$ and $oQ$ are perpendicular to $QS$ and $RS$. Hence we have proved that the altitudes of the triangle $QRS$ are concurrent at the point $o$. QED. Now, in this proof, I considered the three perpendicular lines to be passing through $O$. How will you modify the proof if the three lines did not pass through $O$? \textsf{[4 points]} \\
+
+\textbf{Answer:} \\
+Since $OR$ and $OQ$ are orthogonal to $OS$,
+\begin{eqnarray*}
+OS^TOR &=& 0
+\end{eqnarray*}
+and
+\begin{eqnarray*}
+OS^TOQ &=& 0
+\end{eqnarray*}
+Consider,
+\begin{eqnarray*}
+OS^T(OR - OQ) &=& OS^TOR - OS^TOQ\\
+&=& 0
+\end{eqnarray*}
+Therefore, $OS$ is orthogonal to $OR-OQ$.\\
+
+$Q$ and $R$ lie on the image plane and the optical axis $Oo$ is perpendicular to the image plane.\\
+Therefore, $Oo$ is perpendicular to $OR-OQ = QR$.\\
+
+This implies that the plane defined by $Oo$ and $OS$ is orthogonal to $OR - OQ$. This is the plane formed by the triangle $OSo$.\\
+Therefore, $oS$ is perpendicular to $OR - OQ = QR$.\\
+
+Similarly, $oR$ and $oQ$ are perpendicular to $QS$ and $RS$. \\
+Hence altitudes of the triangle $QRS$ are concurrent at the point $o$.\\
+
+Suppose, the lines $OQ, OR$ and $OS$ did not pass through $O$ but passed through another point $O'$.\\
+Now, if we translate $O'Q, O'R$ and $O'S$ to $O$, the vanishing points do not change. ($\because$ parallel lines have same vanishing point) \\
+We can now apply the above procedure to prove the orthocenter property. \\
+
+\end{document}

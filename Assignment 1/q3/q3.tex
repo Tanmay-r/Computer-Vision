@@ -1,0 +1,47 @@
+\title{Assignment 1: Question 3}
+\author{}
+\date{Due: 5th February before 11:59 pm}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\setlength\parindent{0pt}
+
+\maketitle
+
+\textbf{Question:} Prove that the vanishing points of three coplanar lines are collinear. \textsf{[2 points]} \\
+
+\textbf{Answer:} \\
+
+Case 1: No two lines are parallel to each other.\\
+
+Let two of the lines be $L_1 = (l_{1x}, l_{1y}, l_{1z})$ and $L_2 = (l_{2x}, l_{2y}, l_{2z})$.\\
+The third line can be represented as a linear combination of $L_1$ and $L_2$.\\
+Therefore,\\
+$L3 = t_1L_1 + t_2L_2 = (t_1l_{1x}+t_2l_{2x}, t_1l_{1y}+t_2l_{2y}, t_1l_{1z}+t_2l_{2z})$\\
+
+Now, the vanishing point of $L_1$ is $V_{L1}(f\frac{l_{1x}}{l_{1z}}, f\frac{l_{1y}}{l_{1z}})$ and the vanishing point of $L_2$ is $V_{L2}(f\frac{l_{2x}}{l_{2z}}, f\frac{l_{2y}}{l_{2z}})$. \\
+And the vanishing point of $L_3$ is, \\
+\begin{eqnarray*}
+V_{L3} &=& (f\frac{t_1l_{1x}+t_2l_{2x}}{t_1l_{1z}+t_2l_{2z}}, f\frac{t_1l_{1y}+t_2l_{2y}}{t_1l_{1z}+t_2l_{2z}})\\
+ &=& \frac{t_1l_{1z}}{t_1l_{1z}+t_2l_{2z}}V_{L1} + \frac{t_2l_{2z}}{t_1l_{1z}+t_2l_{2z}}V_{L2} \\
+\end{eqnarray*}
+
+Therefore, $V_{L3}$ lies on the line passing through $V_{L1}$ and $V_{L2}$.\\
+
+Case 2: Two lines are parallel and one line intersecting them.\\
+
+Two parallel lines will have same vanishing point and the third line will have a different vanishing point. \\
+Only two distinct vanishing points and two points are always collinear. \\
+
+Case 3: All three lines are parallel.\\
+
+Only one distinct vanishing point.\\
+
+
+\end{document}

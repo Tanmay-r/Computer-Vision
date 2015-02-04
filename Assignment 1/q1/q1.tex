@@ -1,0 +1,44 @@
+\title{Assignment 1: Question 1}
+\author{}
+\date{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\maketitle
+
+\textbf{Question:} In class, we have seen image formation on a flat screen (i.e. image plane) with a pinhole camera. Now suppose the screen was wrapped on the surface of a sphere and hence, the 3D points were projected onto a spherical surface. Derive a relationship between the coordinates of a 3D point $P = (X,Y,Z)$ and its image on such a screen (both in camera coordinate system). If you had to calibrate this sort of a system, what are the additional intrinsic parameters of the camera as compared to the case of an image plane ? \textsf{[4 points]} \\
+
+\textbf{Answer:} \\
+
+Let $C = (X_0, Y_0, Z_0)$ and $R$ be the center and radius of the spherical surface $S$ respectively. \\
+
+Using parametric form of line, the image of point $P$ on $S$ is given by $P_{img} = (tX, tY, tZ)$. \\
+
+$P_{img}$ lies on $S$. \\
+\begin{eqnarray*}
+R^2 &=& (tX - X_0)^2 + (tY - Y_0)^2 + (tZ - Z_0)^2 \\
+0 &=& t^2(X^2 + Y^2 + Z^2) - 2t(XX_0 + YY_0 + ZZ_0) + X_0^2 + Y_0^2 + Z_0^2 - R^2\\
+t &=& \frac{2(XX_0 + YY_0 + ZZ_0) \pm \sqrt{4(XX_0 + YY_0 + ZZ_0)^2 - 4(X^2 + Y^2 + Z^2)(X_0^2 + Y_0^2 + Z_0^2 - R^2)}}{2(X^2 + Y^2 + Z^2)(X_0^2 + Y_0^2 + Z_0^2 - R^2)}
+\end{eqnarray*}
+
+Since $P_{img}$ and $P$ are on opposite side of pinhole (origin), $t$ should be negative.\\
+
+Therefore,\\
+\begin{eqnarray*}
+t &=& \frac{(XX_0 + YY_0 + ZZ_0) - \sqrt{(XX_0 + YY_0 + ZZ_0)^2 - (X^2 + Y^2 + Z^2)(X_0^2 + Y_0^2 + Z_0^2 - R^2)}}{(X^2 + Y^2 + Z^2)(X_0^2 + Y_0^2 + Z_0^2 - R^2)} \\
+\end{eqnarray*}
+
+\textbf{Instrinsic Parameters}: \\
+
+Center of the spherical surface ($C = (X_0, Y_0, Z_0)$) \\
+
+Radius of the sphere ($R$) \\
+
+Pixel Aspect Ratios ($s_{\theta}, s_{\phi}$ in spherical co-ordinates) \\
+\end{document}
