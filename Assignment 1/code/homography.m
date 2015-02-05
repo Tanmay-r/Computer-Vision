@@ -17,7 +17,6 @@ matrixA(2:2:end,7) = matchedPoints(:,4).*matchedPoints(:,1);
 matrixA(2:2:end,8) = matchedPoints(:,4).*matchedPoints(:,2);
 matrixA(2:2:end,9) = matchedPoints(:,4);
 
-'done'
 [U S V] = svd(matrixA);
 c=reshape(V(:,end)',1,9);
 H=reshape(c,3,3)';
