@@ -1,0 +1,75 @@
+\title{Assignment 1: Question 5}
+\author{}
+\date{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage{relsize}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\setlength\parindent{0pt}
+
+\maketitle
+
+\textbf{Question:} Consider two sets of corresponding points $\{\mathbf{p}_{1i} = (x_{1i},y_{1i})\}_{i=1}^{n}$ and $\{\mathbf{p}_{2i} = (x_{2i},y_{2i})\}_{i=1}^{n}$. Assume that each pair of corresponding points is related as follows: $\mathbf{p}_{2i} = \alpha \mathbf{R} \mathbf{p}_{1i} + \mathbf{t} + \mathbf{\eta}_i$ where $\mathbf{R}$ is an unknown rotation matrix, $\mathbf{t}$ is an unknown translation vector, $\alpha$ is an unknown scalar factor and $\mathbf{\eta}_i$ is a vector (unknown) representing noise. Explain how you will extend the method we studied in class for estimation of $\mathbf{R}$ to estimate $\alpha$ and $\mathbf{t}$ as well. Derive all necessary equations (do not merely guess the answers). \textsf{[5 points]} \\
+
+\textbf{Answer:} \\
+We seek to minimize,\\
+\begin{eqnarray*}
+E(\boldsymbol{R}, \boldsymbol{t}, \alpha) &=& ||\boldsymbol{P_2}- (\alpha \boldsymbol{RP_1}+ \boldsymbol{t}) ||_F^2\\
+ &=& \mathlarger{‎‎\sum}_{i=0}^{N}||\boldsymbol{p}_{2i} - (\alpha \boldsymbol{Rp}_{1i} + \boldsymbol{t}) ||_F^2\\
+\frac{\partial E}{\partial \boldsymbol{t}} &=& 2\mathlarger{‎‎\sum}_{i=0}^{N}(\boldsymbol{p}_{2i} - \alpha \boldsymbol{Rp}_{1i} - \boldsymbol{t})(-1) \\
+0 &=& 2\mathlarger{‎‎\sum}_{i=0}^{N}(\boldsymbol{p}_{2i} - \alpha \boldsymbol{Rp}_{1i} - \hat{\hat{\boldsymbol{t}}})(-1)\\
+N\hat{\boldsymbol{t}} &=& \mathlarger{‎‎\sum}_{i=0}^{N}\boldsymbol{p}_{2i} - \alpha \boldsymbol{R}\mathlarger{‎‎\sum}_{i=0}^{N}\boldsymbol{p}_{1i}\\
+\hat{\boldsymbol{t}} &=& \bar{\boldsymbol{p}_2} -  \alpha\boldsymbol{R}\bar{\boldsymbol{p}_1}\\
+\end{eqnarray*}
+
+\begin{eqnarray*}
+E(\boldsymbol{R}, \hat{\boldsymbol{t}}, \alpha) &=& ||\boldsymbol{P_2}- (\alpha \boldsymbol{RP_1}+ \hat{\boldsymbol{t}}) ||_F^2\\
+E(\boldsymbol{R}, \hat{\boldsymbol{t}}, \alpha) &=& ||\boldsymbol{P_2}- (\alpha \boldsymbol{RP_1}+ \bar{\boldsymbol{P}_2} -  \alpha\boldsymbol{R}\bar{\boldsymbol{P}_1}) ||_F^2\\\
+E(\boldsymbol{R}, \alpha) &=& ||\boldsymbol{P'_2}- (\alpha \boldsymbol{RP'_1}) ||_F^2\\\
+\end{eqnarray*}
+
+where, $\boldsymbol{P'_2} = \boldsymbol{P_2} - \bar{\boldsymbol{P}_2}$ and $\boldsymbol{P'_1} = \boldsymbol{P_1} - \bar{\boldsymbol{P}_1}$. \\
+
+\begin{align}
+E(\boldsymbol{R}, \alpha) &=& ||\boldsymbol{P'_2}- (\alpha \boldsymbol{RP'_1}) ||_F^2\\\
+&=& trace((\boldsymbol{P'_2}- \alpha \boldsymbol{RP'_1})^T(\boldsymbol{P'_2}- \alpha \boldsymbol{RP'_1}))\\
+&=& trace(\boldsymbol{P'_2}^T\boldsymbol{P'_2} - \alpha \boldsymbol{P'^T_2RP'_1} - \alpha (\boldsymbol{RP'_1})^T\boldsymbol{P'_2} + \alpha^2 (\boldsymbol{RP'_1})^T\boldsymbol{RP'_1})\\
+&=& trace(\boldsymbol{P'_2}^T\boldsymbol{P'_2} - 2\alpha \boldsymbol{P'^T_2RP'_1} + \alpha^2 \boldsymbol{P'_1}^T\boldsymbol{P'_1})\\
+&=& trace(\boldsymbol{P'_2}^T\boldsymbol{P'_2}) - 2\alpha trace(\boldsymbol{P'^T_2RP'_1}) + \alpha^2 trace(\boldsymbol{P'_1}^T\boldsymbol{P'_1}) \label{eq:test} \\
+\end{align}
+
+Assume $\alpha$ to be constant for the estimation of $\boldsymbol{R}$. \\
+Then, minimizing $E(\boldsymbol{R})$ is equivalent to maximizing $trace(\boldsymbol{P'^T_2RP'_1})$. (We consider $\alpha > 0$, since $\alpha < 0$ causes reflection.)
+
+\begin{eqnarray*}
+trace(\boldsymbol{P'^T_2RP'_1}) &=& trace(\boldsymbol{RP'_1P'^T_2})\\
+\boldsymbol{P'_1P'^T_2} &=& \boldsymbol{USV^T}\\
+trace(\boldsymbol{P'^T_2RP'_1}) &=& trace(\boldsymbol{RUSV^T})\\
+&=& trace(\boldsymbol{SV^TRU}) \\
+&=& trace(\boldsymbol{SX})\\
+\end{eqnarray*}
+where $\boldsymbol{X}$ is orthogonal. \\
+This expression is maximized if $\boldsymbol{X}_{ii} = 1$ all along its diagonal. \\
+As $\boldsymbol{X}$ is orthonormal, we must have $\boldsymbol{X} = \boldsymbol{I}$\\
+Therefore,
+\begin{eqnarray*}
+\boldsymbol{R} = \boldsymbol{VU^T}\\
+\end{eqnarray*}
+
+From \ref{eq:test},\\
+\begin{eqnarray*}
+E(\boldsymbol{R}, \alpha) &=& trace(\boldsymbol{P'_2}^T\boldsymbol{P'_2}) - 2\alpha trace(\boldsymbol{P'^T_2RP'_1}) + \alpha^2 trace(\boldsymbol{P'_1}^T\boldsymbol{P'_1})\\
+E(\boldsymbol{R}, \alpha) &=& trace(\boldsymbol{P'_2}^T\boldsymbol{P'_2}) - 2\alpha trace(\boldsymbol{P'^T_2VU^TP'_1}) + \alpha^2 trace(\boldsymbol{P'_1}^T\boldsymbol{P'_1})\\
+\frac{\partial E}{\partial \boldsymbol{\alpha}} &=& - 2 trace(\boldsymbol{P'^T_2VU^TP'_1}) + 2\alpha trace(\boldsymbol{P'_1}^T\boldsymbol{P'_1}) \\
+0 &=& - 2 trace(\boldsymbol{P'^T_2VU^TP'_1}) + 2\alpha trace(\boldsymbol{P'_1}^T\boldsymbol{P'_1}) \\
+\alpha &=& \frac{trace(\boldsymbol{P'^T_2VU^TP'_1})}{trace(\boldsymbol{P'_1}^T\boldsymbol{P'_1})}
+\end{eqnarray*}
+
+
+\end{document}
