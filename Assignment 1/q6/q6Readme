@@ -1,0 +1,41 @@
+How to run?
+q6(1)  --- for without noise
+q6(2)  --- for with noise
+
+Projection Matrix corresponding to Dataset1: (without noise)
+   
+   -0.2914   -0.0510    0.1891    0.6344
+    0.0882   -0.3240    0.0935    0.5940
+   -0.0002   -0.0002   -0.0001    0.0021
+
+Frobenius Norm of the different betweent the estimated image points and the actual: 1.2952e-10 (written the code for the same)
+
+Projection Matrix corresponding to Dataset1: (with noise)
+
+	-0.2905   -0.0532    0.1866    0.6283
+    0.0881   -0.3264    0.0881    0.6010
+   -0.0002   -0.0002   -0.0002    0.0021
+
+Frobenius Norm of the different betweent the estimated image points and the actual: 69.3450
+
+Frobenius norm of the difference has increased because it is difficult to come with a matrix for perturbed data, the data can not be assumed to have been come up with a pinhole camera perfectly because of the presence of noise.
+-----------------------------------------------------------------------------------
+
+Projection Matrix corresponding to Dataset2: (without noise)
+   
+   -0.0087   -0.0011    0.0039   -0.9986
+   -0.0001   -0.0092   -0.0005    0.0520
+   -0.0000   -0.0000   -0.0000   -0.0027
+
+Frobenius Norm of the different betweent the estimated image points and the actual: 21.2093
+
+Projection Matrix corresponding to Dataset1: (with noise)
+
+	0.0026   -0.0003   -0.0038    0.9757
+   -0.0013    0.0047   -0.0010    0.2190
+   -0.0000   -0.0000   -0.0000    0.0024
+
+Frobenius Norm of the different betweent the estimated image points and the actual: 1.1468e+03
+
+The same reason holds for this too. Here the no. of points are large hence the frobenius norms are higher and absolute value of standard deviation is high too.
+------------------------------------------------------------------------
