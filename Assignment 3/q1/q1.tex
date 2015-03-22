@@ -1,0 +1,31 @@
+\title{Assignment 3: Question 1}
+\author{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\maketitle
+
+Consider a surface with Lambertian reflectance map, known geometry (example: sphere) and unknown but constant albedo. Given an image of such a surface taken with a point light source of unknown power, show how you will determine the lighting direction. Assume there are no shadows. Write down all necessary equations. \textsf{[3 points]} \\
+
+Answer: \\
+
+For a Lambertian surface we have, \\
+$I(x,y) = L \rho \mathbf{N}^t(x,y) \mathbf{d}$ \\
+where $\mathbf{d}$ is a lighting direction (unknown), $L$ is the power of the light source (unknown), $\rho$ is the albedo (unknown) and $\mathbf{N}(x,y)$ is the unit surface normal vector at pixel $(x,y)$ (known). \\
+Let $\mathbf{\tilde{d}} = L \rho \mathbf{d}$. \\
+Therefore, $\mathbf{I} = \mathbf{N}^t \mathbf{\tilde{d}}$. \\
+Using pseudo-inverse, \\
+$\mathbf{\tilde{d}} = (\mathbf{NN}^t)^{-1} \mathbf{NI}$ \\
+$L \rho \mathbf{d} = (\mathbf{NN}^t)^{-1} \mathbf{NI}$ \\
+$L \rho = \sqrt{\mathbf{\tilde{d}}_{1}^{2} + \mathbf{\tilde{d}}_{2}^{2} + \mathbf{\tilde{d}}_{3}^{2}}$ (Since, $\mathbf{d}$ is a unit vector). \\
+Therefore, $\mathbf{d} = ((\mathbf{NN}^t)^{-1} \mathbf{NI})/ L \rho$. \\
+
+
+
+\end{document}
