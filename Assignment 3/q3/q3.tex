@@ -1,0 +1,66 @@
+\title{Assignment 3: Question 3}
+\author{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\maketitle
+
+Consider $K$ images of a stationary Lambertian object captured from an orthographic camera at a fixed viewpoint, under $K$ different lighting directions and lighting intensities respectively. For the $i^{\textrm{th}}$ lighting condition, we write $I_i(x,y) = L_i \rho(x,y) \mathbf{N}^t(x,y) \mathbf{d_i}$, where $1 \leq i \leq K$, $\mathbf{d_i}$ is a lighting direction, $L_i$ is the power of the light source, $\rho(x,y)$ is the albedo and $\mathbf{N}(x,y)$ is the unit surface normal vector at pixel $(x,y)$ (we will assume that there were no shadows at any pixel in any image). We can combine all $K$ equations to write the relation $\mathbf{I} = \mathbf{\tilde{N}} \mathbf{\tilde{D}}$. Here $\mathbf{I} \in \mathbb{R}^{M \times K}$ is a matrix whose $i^{\textrm{th}}$ column ($1 \leq i \leq K$) contains the $i^{\textrm{th}}$ image in vectorized form. $\mathbf{\tilde{N}} \in \mathbb{R}^{M \times 3}$ is a matrix whose $j^{\textrm{th}}$ row contains the product of the unit surface normal vector at some point and the albedo at that point, i.e. $\mathbf{\tilde{N}}_j$ (the $j^{\textrm{th}}$ row of $\mathbf{\tilde{N}}$) is given by $\mathbf{\tilde{N}}_j = \rho(x,y) \mathbf{N}(x,y)$ where $(x,y)$ will go to row $j$ when the image is vectorized. $\mathbf{\tilde{D}} \in \mathbb{R}^{3 \times K}$ is a matrix whose $i^{\textrm{th}}$ column contains $L_i \mathbf{d_i}$. Now answer the following:
+\begin{enumerate} 
+\item Show that $\mathbf{I}$ has rank 3 in the absence of noise. \textsf{[2 points]} \\
+
+$\mathbf{I} = \mathbf{\tilde{N}} \mathbf{\tilde{D}}$ \\
+here, $\mathbf{\tilde{N}} \in \mathbb{R}^{M \times 3}$ \\
+and, $\mathbf{\tilde{D}} \in \mathbb{R}^{3 \times K}$. \\
+
+Therefore,
+$\mathbf{I}$ has rank 3 in the absence of noise. \\
+
+\item We have seen (or will soon see) the photometric stereo problem in class where we estimate surface normals from the images under different lighting conditions, assuming the lighting directions were known. Now suppose, we did not know the lighting directions $\{\mathbf{d_i}\}$, the light source intensities $\{L_i\}$, the albedo at each point on the surface of the object $\{\rho(x,y)\}$, and the surface normals $\{\mathbf{N}(x,y)\}$. Given $\mathbf{I}$, we can perform the SVD to `find' $\mathbf{\tilde{N}}$ and $\mathbf{\tilde{D}}$. But the decomposition will be unique only up to an unknown $3 \times 3$ invertible transformation $\mathbf{A}$. (There is a very interesting similarity between this problem and the Tomasi-Kanade factorization in structure from motion.) Now, consider that the albedo at some $m > 1$ points was known. Show how this information can help you make the decomposition unique up to an unknown orthonormal transformation $\mathbf{R}$. What is the minimum $m$ needed? What will happen if you didn't know the actual albedo values at these $m$ points, but only knew that they were all equal? \textsf{[4 points]} \\
+
+$\mathbf{I} = \mathbf{\tilde{N}} \mathbf{\tilde{D}}$ \\
+Given matrix $\mathbf{I}$, perform SVD as \\
+$\mathbf{I}_{M \times K} = \mathbf{U}_{M \times M} \mathbf{S}_{M \times K} (\mathbf{V}_{K \times K})^T$ \\
+$\mathbf{I}_{M \times K} = \mathbf{U}_{M \times M} \mathbf{S}_{M \times K}^{1/2} \mathbf{S}_{M \times K}^{1/2} (\mathbf{V}_{K \times K})^T$ \\
+We can have $\mathbf{\tilde{N}} = \mathbf{U}_{M \times M} \mathbf{S}_{M \times K}^{1/2} $ and $ \mathbf{\tilde{D}} = \mathbf{S}_{M \times K}^{1/2} (\mathbf{V}_{K \times K})^T$. \\
+But the decomposition $\mathbf{\tilde{N}}$ and $\mathbf{\tilde{D}}$ will be unique only up to an unknown $3 \times 3$ invertible transformation $\mathbf{A}$.\\
+$\mathbf{I} = \mathbf{\tilde{N}} \mathbf{\tilde{D}} = \mathbf{\tilde{N}} (\mathbf{AA}^{-1})\mathbf{\tilde{D}} = \mathbf{\tilde{N}} \mathbf{AA}^{-1}\mathbf{\tilde{D}}$\\
+
+If albedo at some points is known, then magnitude of the corresponding rows of $\mathbf{\tilde{N}}$ ($\mathbf{\tilde{N}}_j = \rho(x,y) \mathbf{N}(x,y)$) is known. (Since $\mathbf{N}(x,y)$ is unit surface normal, magnitude equals albedo) \\
+Therefore,
+$\mathbf{\tilde{N}}_j^t\mathbf{AA}^{T}\mathbf{\tilde{N}}_j = \rho_{j}^{2}$ \\
+We have above equations for $m$ points, solving them using Newton Raphson method as discussed in class, we get final $\mathbf{\tilde{N}}$ and $\mathbf{\tilde{D}}$ matrices. But these matrices are unique only up to some unknown orthonormal transformation $\mathbf{R}$. \\
+$\mathbf{I} = \mathbf{\tilde{N}} \mathbf{RR}^{T}\mathbf{\tilde{D}}$\\
+
+We need to determine 9 entries of $\mathbf{A}$, therefore we need $m$ to be at least 9.\\
+
+If we didn't know the actual albedo values at these $m$ points, but only knew that they were all equal, say $\rho_{0}$. \\
+Then the equations become \\
+$\mathbf{\tilde{N}}_j^t\mathbf{AA}^{T}\mathbf{\tilde{N}}_j = \rho_{0}^{2}$ \\
+In this case, we solve for 10 variables (9 variables from $\mathbf{A}$ and $\rho_{0}$) using Newton Raphson method and get the matrix $\mathbf{A}$ and the value of $\rho_{0}$. In this case, $m$ needs to be at least 10.\\
+
+
+
+\item Instead of marking out points with equal albedo, suppose you were told that the intensity of the light source in $m > 1$ images was known. Show again how this information can help you make the decomposition unique up to an unknown orthonormal transformation $\mathbf{R}$.  What is the minimum $m$ needed?  What will happen if you didn't know the actual intensities, but only knew that they were all equal? \textsf{[4 points]} \\
+
+If intensity of the light source in some images is known, then magnitude of the corresponding columns of $\mathbf{\tilde{D}}$ ($\mathbf{\tilde{D}}_i = \mathbf{L}_{i} \mathbf{d}_{i}$) is known. (Since $\mathbf{d}_{i}$ is a direction, magnitude equals intensity of the light source) \\
+Therefore,
+$\mathbf{\tilde{D}}_i^t(\mathbf{A}^{-1})^{T}\mathbf{A}^{-1}\mathbf{\tilde{D}}_i = \mathbf{L}_{i}^{2}$ \\
+We have above equations for $m$ points, solving them using Newton Raphson method as discussed in class, we get final $\mathbf{\tilde{N}}$ and $\mathbf{\tilde{D}}$ matrices. But these matrices are unique only up to some unknown orthonormal transformation $\mathbf{R}$. \\
+$\mathbf{I} = \mathbf{\tilde{N}} \mathbf{RR}^{T}\mathbf{\tilde{D}}$\\
+
+We need to determine 9 entries of $\mathbf{A}^{-1}$, therefore we need $m$ to be at least 9.\\
+
+If we didn't know the actual intensity values at these $m$ points, but only knew that they were all equal, say $\mathbf{L}_{0}$. \\
+Then the equations become \\
+$\mathbf{\tilde{D}}_i^t(\mathbf{A}^{-1})^{T}\mathbf{A}^{-1}\mathbf{\tilde{D}}_i = \mathbf{L}_{0}^{2}$ \\
+In this case, we solve for 10 variables (9 variables from $\mathbf{A}^{-1}$ and $\mathbf{L}_{0}$) using Newton Raphson method and get the matrix $\mathbf{A}^{-1}$ and the value of $\mathbf{L}_{0}$.\\
+\end{enumerate}
+
+\end{document}
