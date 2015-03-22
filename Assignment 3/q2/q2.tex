@@ -1,0 +1,36 @@
+\title{Assignment 3: Question 2}
+\author{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\maketitle
+
+A Lambertian object illuminated by a point source has a reflectance map of the form given by 
+\begin{equation}
+R(p,q) = \frac{1+pp_s + qq_s}{\sqrt{1+p^2_s+q^2_s}\sqrt{1+p^2+q^2}}
+\end{equation}
+where the surface normal is $(-p,-q,1)$ and the light source direction is $(-p_s,-q_s,1)$. What value(s) of $(p,q)$ will maximize $R(p,q)$? For what values, will you get $R(p,q) = 0$? \textsf{[2 points]}\\
+
+Answer: \\
+\begin{equation}
+R(p,q) = \frac{1+pp_s + qq_s}{\sqrt{1+p^2_s+q^2_s}\sqrt{1+p^2+q^2}}
+\end{equation}
+where the surface normal is $(-p,-q,1)$ and the light source direction is $(-p_s,-q_s,1)$. \\
+
+Then, \\
+$ R(p,q) = cos (\theta) $ where $\theta$ is the angle between surface normal and the light source direction. \\
+Maximum value of $ R(p,q)$ occurs when $ cos (\theta) = 1$, that is, $(-p,-q,1)$ and $(-p_s,-q_s,1)$ are parallel. \\
+Therefore, $ p = p_{s} $ and $ q = q_{s}$.
+
+$ R(p,q) = 0 $ implies $\theta = 90^{\circ}$. \\
+$ 1 + pp_s + qq_s = 0$ \\
+$ p = - (1 + qq_s)/p_s$ \\
+Therefore, $ R(p,q) = 0 $ for any pair ($- (1 + qq_s)/p_s, q$) for any $q$. \\
+
+\end{document}
