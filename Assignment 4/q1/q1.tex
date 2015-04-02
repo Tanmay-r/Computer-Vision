@@ -1,0 +1,181 @@
+\title{Assignment 4: Question 1}
+\author{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+\item Answer the following questions pertaining to the essential/fundamental matrix in a binocular stereo system:
+\begin{enumerate}
+\item Consider two cameras with parallel optical axes, with the optical center of the second camera at a location $(a,0,0)$ as measured in the first camera's coordinate frame. What is the essential matrix of this stereo system?
+\paragraph{Answer}
+Essential matrix $\textbf{E} = \textbf{RS}$.\\
+$\textbf{R} = \textbf{I}$ and \\
+\[
+S =
+\begin{pmatrix}
+    0 & -T_{z} & T_{y} \\
+    T_{z} & 0 & - T_{x} \\
+    - T_{y} & T_{x} & 0\\
+\end{pmatrix}
+\]
+\[
+ =
+\begin{pmatrix}
+    0 & 0 & 0 \\
+    0 & 0 & -a \\
+    0 & a & 0\\
+\end{pmatrix}
+\]
+Therefore,
+\[
+E =
+\begin{pmatrix}
+    0 & 0 & 0 \\
+    0 & 0 & -a \\
+    0 & a & 0\\
+\end{pmatrix}
+\]
+
+\item Suppose I gave you the fundamental matrix of a stereo system, how will you infer the left and right epipoles?
+\paragraph{Answer}
+The left epipole lies on all epipolar lines in the left image.
+\begin{align*}
+\therefore \mathbf{\widetilde{p}_r^tF\widetilde{e}_l} &= 0 \\
+\therefore \mathbf{F\widetilde{e}_l} &= 0
+\end{align*}
+Therefore, $\mathbf{\widetilde{e}_l}$ lies in the nullspace of $\mathbf{F}$.\\
+Likewise, $\mathbf{\widetilde{e}_r}$ lies in the nullspace of $\mathbf{F^t}$.\\
+
+Taking SVD, $\mathbf{F} = \mathbf{USV^T}$ \\
+$\mathbf{\widetilde{e}_l}$ is the column of $\mathbf{V}$ corresponding to null singular value and $\mathbf{\widetilde{e}_r}$ is the column of $\mathbf{U}$ corresponding to null singular value.\\
+\item Prove that any essential matrix will have one singular value which is zero, and that its other two singular values are identical. Derive a relationship between these singular values and the extrinsic parameters of the stereo system (\textit{i.e.}, the rotation matrix $\textbf{R}$ and/or the translation vector $\textbf{t}$ between the coordinate frames of the two cameras). [Hint: Show that if $\textbf{E}$ is the essential matrix, then we can write $\textbf{E}^T \textbf{E} = \alpha (\textbf{I}_{3 \times 3} - \textbf{t}_\textbf{u} \textbf{t}^T_\textbf{u})$ where $\alpha$ is some scalar which you should express in terms of $\textbf{R}$ and/or $\textbf{t}$, $\textbf{I}_{3 \times 3}$  is the identity matrix with 3 rows and 3 columns, and $\textbf{t}_\textbf{u}$ is a vector of unit magnitude in the direction of $\textbf{t}$].
+\paragraph{Answer}
+Essential matrix,
+\begin{align*}
+\mathbf{E} &= \mathbf{RS} \\
+\mathbf{E^TE} &= (\mathbf{RS})\mathbf{^TRS} \\
+ &= \mathbf{S^TR^TRS} \\
+ &= \mathbf{S^TS}\\
+\end{align*}
+
+\[
+S =
+\begin{pmatrix}
+    0 & -T_{z} & T_{y} \\
+    T_{z} & 0 & - T_{x} \\
+    - T_{y} & T_{x} & 0\\
+\end{pmatrix}
+\]
+\[
+S^TS =
+\begin{pmatrix}
+    0 & T_{z} & -T_{y} \\
+    -T_{z} & 0 & T_{x} \\
+    T_{y} & -T_{x} & 0\\
+\end{pmatrix}
+\begin{pmatrix}
+    0 & -T_{z} & T_{y} \\
+    T_{z} & 0 & - T_{x} \\
+    - T_{y} & T_{x} & 0\\
+\end{pmatrix}
+\]
+\[
+ =
+\begin{pmatrix}
+    T_{z}^2 + T_{y}^2 & -T_{x}T_{y} & -T_{x}T_{z}\\
+    -T_{x}T_{y} & T_{x}^2 + T_{z}^2 & -T_{y}T_{z}\\
+    -T_{x}T_{z} & -T_{y}T_{z} & T_{x}^2 + T_{y}^2\\
+\end{pmatrix}
+\]
+\[
+ =
+ \begin{pmatrix}
+    T_{x}^2 + T_{y}^2 + T_{z}^2 & 0 & 0\\
+    0 & T_{x}^2 + T_{y}^2 + T_{z}^2 & 0\\
+    0 & 0 & T_{x}^2 + T_{y}^2 + T_{z}^2\\
+\end{pmatrix} -
+\begin{pmatrix}
+    T_{x}^2 & T_{x}T_{y} & T_{x}T_{z}\\
+    T_{x}T_{y} & T_{y}^2 & T_{y}T_{z}\\
+    T_{x}T_{z} & T_{y}T_{z} & T_{z}^2\\
+\end{pmatrix}
+\]
+\[
+ = T_{x}^2 + T_{y}^2 + T_{z}^2 (
+ \begin{pmatrix}
+    1 & 0 & 0\\
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+\end{pmatrix} -
+\frac{1}{T_{x}^2 + T_{y}^2 + T_{z}^2}
+\begin{pmatrix}
+    T_{x}^2 & T_{x}T_{y} & T_{x}T_{z}\\
+    T_{x}T_{y} & T_{y}^2 & T_{y}T_{z}\\
+    T_{x}T_{z} & T_{y}T_{z} & T_{z}^2\\
+\end{pmatrix})
+\]
+\[
+ = T_{x}^2 + T_{y}^2 + T_{z}^2 (I -
+\textbf{t}_\textbf{u} \textbf{t}^T_\textbf{u})
+\]
+
+Therefore, $\alpha = T_{x}^2 + T_{y}^2 + T_{z}^2$.
+
+\begin{align*}
+\mathbf{E^TE} &= \alpha(\mathbf{I}_{3\times3} - \mathbf{t_ut_u}^T)\\
+\end{align*}
+
+$\textbf{t}_\textbf{u}$ is a vector of unit magnitude in the direction of $\textbf{t}$. \\
+Therefore, $\textbf{t}_\textbf{u}^T\textbf{t}_\textbf{u} = 1 $. \\
+
+Consider,
+\begin{align*}
+\mathbf{E^TEt_u} &= \alpha(\mathbf{t_u} - \mathbf{t_ut_u}^T\mathbf{t_u})\\
+\mathbf{E^TEt_u} &= \alpha(\mathbf{t_u} - \mathbf{t_u})\\
+\mathbf{E^TEt_u} &= 0\\
+\end{align*}
+
+Therefore, one of the eigenvalues of $\textbf{E}^T \textbf{E}$ is zero and $\textbf{t}_\textbf{u}$ is the corresponding eigenvector. \\
+Let us consider two vectors $\textbf{a}$, $\textbf{b}$ perpendicular to $\textbf{t}_\textbf{u}$. \\
+
+\begin{align*}
+\mathbf{E^TEt_u} &= \alpha(\mathbf{a} - \mathbf{t_u}(\mathbf{t_u}^T\mathbf{a}))\\
+\mathbf{E^TEt_u} &= \alpha(\mathbf{a} - 0)\\
+\mathbf{E^TEt_u} &= \alpha\mathbf{a}\\
+\end{align*}
+
+$\textbf{a}$ is an eigenvector of $\textbf{E}^T \textbf{E}$ with an eigenvalue $\alpha$.\\
+Similarly, $\textbf{b}$ is an eigenvector of $\textbf{E}^T \textbf{E}$ with an eigenvalue $\alpha$.\\
+
+Therefore, $\textbf{E}^T \textbf{E}$ has two eigenvectors with eigenvalues $\alpha$ and one eigenvector with eigenvalue zero. \\Sinceeigenvalues of $\textbf{E}^T \textbf{E}$ and $\textbf{E}$ are same, $\textbf{E}$ has eigenvalues 0, $\alpha$ and $\alpha$ where $\alpha = T_{x}^2 + T_{y}^2 + T_{z}^2$.\\
+
+
+
+\item In the noiseless case, what is the minimum number of corresponding pairs of points you must know in order to estimate the essential matrix? Or in other words, how many degrees of freedom does an essential matrix have? Justify your answer. (Think carefully).
+\paragraph{Answer}
+Essential matrix $\textbf{E} = \textbf{RS}$.\\
+\[
+S =
+\begin{pmatrix}
+    0 & -T_{z} & T_{y} \\
+    T_{z} & 0 & - T_{x} \\
+    - T_{y} & T_{x} & 0\\
+\end{pmatrix}
+\]
+Therefore, $\textbf{S}$ has 3 degrees of freedom and $\textbf{R}$ being the rotational matrix has 3 degrees of freedom. But since we can divide the essential matrix by any scalar coefficient ($\textbf{p}_r^t\textbf{Ep}_l$ = 0), essential matrix has only 5 degrees of freedom. Therefore, you must know 5 corresponding pairs of points in order to estimate the essential matrix.
+
+\item We have studied the eight-point algorithm in class for estimating the essential/fundamental matrix. There exist algorithms that require only 7 pairs of corresponding points. In robust estimation, what main advantage will a 7-point algorithm have over the 8-point version?
+\paragraph{Answer}
+We use RANSAC algorithm to estimate the essential/fundamental matrix in robust estimation. The main advantage for a 7-point algorithm will be that for a fixed amount of error, the number of RANSAC iterations will be less in case of a 7-point algorithm as compared to an 8-point algorithm.
+\end{enumerate}
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,71 @@
+\documentclass[11pt]{article}
+\usepackage[hmargin=1in,vmargin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{placeins}
+\begin{document}
+\newcommand*\colvec[3][]{
+    \begin{pmatrix}\ifx\relax#1\relax\else#1\\\fi#2\\#3\end{pmatrix}
+}
+\def\bs{\textbackslash}
+\setlength\parindent{0pt}
+\def\reals{\hbox{\rm I\kern-.18em R}}
+\def\complexes{\hbox{\rm C\kern-.43em
+\vrule depth 0ex height 1.4ex width .05em\kern.41em}}
+\def\field{\hbox{\rm I\kern-.18em F}} %symbol for field
+\title{Homework Template}
+\setcounter{page}{1}
+\begin{center}
+Assignment:4 Question 2
+\end{center}
+\vspace{1ex}
+
+\section{Reason to do normalization}
+When we are solving for the essential matrix we are trying to find a matrix f such that $Af=0$ where A is the matrix as described in the slides.
+As per the homogeneous representation of the points
+\begin{eqnarray}
+p = \colvec[x]{y}{1}
+\end{eqnarray}
+Both x and y will lie in range of the size of the image where as the last coordinate is constant. Further if the features points are found in a very small region of the image the first principal singular will be large  as all the p's are more of less in the same direction affecting the remaining singular values which will be small.
+\section{Normalization expressed as Matrices}
+\begin{eqnarray}
+p_{l} = \colvec[x_{l}]{y_{l}}{1}\\
+p_{r} = \colvec[x_{r}]{y_{r}}{1} 
+\end{eqnarray}
+Let $T_{l}$ and $T_{r}$ be the normalization matrices for the left and right set of points.
+\begin{eqnarray}
+\bar{p_{l}} = T_{l}\colvec[x_{l}]{y_{l}}{1}\\
+\bar{p_{r}} = T_{r}\colvec[x_{r}]{y_{r}}{1} 
+\end{eqnarray}
+Let the essential matrix for initial points be F and for normalized points be $\bar{F}$. Since
+\begin{eqnarray}
+p_{l}'Fp_{r} = 0\\
+\bar{p_{l}}'((T_{l})')^{-1}F(T_{r})^{-1}\bar{p_{r}} = 0\\
+\bar{p_{l}}'\bar{F}\bar{p_{r}} = 0\\
+\bar{F} = (T_{l}')^{-1}F(T_{r}')^{-1}\\
+(T_{l}')\bar{F}(T_{r}') = F
+\end{eqnarray}
+Structure for Translation \& Scaling matrices
+\begin{eqnarray}
+T_{l} = \begin{bmatrix}
+       \frac{1}{\sigma_{l}} & 0 & \bar{x_{l}}           \\[0.3em]
+       0 & \frac{1}{\sigma_{l}}          & \bar{y_{l}} \\[0.3em]
+       0           & 0 & 1
+     \end{bmatrix}\\
+T_{r} = \begin{bmatrix}
+       \frac{1}{\sigma_{r}} & 0 & \bar{x_{r}}           \\[0.3em]
+       0 & \frac{1}{\sigma_{r}}          & \bar{y_{r}} \\[0.3em]
+       0           & 0 & 1
+     \end{bmatrix}
+\end{eqnarray}
+Similarly we can write the formula for $T_{r}$ and $\sigma_{l,x}$ represents the variance for the x co-ordinates for the points in the left image. $\bar{x_{l}}$ represents the mean for the x coordinates of the for the x co-ordinates for the points in the left image. Similar notation for other symbols too.
+\begin{eqnarray}
+\bar{x_{l}} = \dfrac{\sum\limits_{i=1}^{N} x_{l,i}}{N}\\
+\bar{y_{l}} = \dfrac{\sum\limits_{i=1}^{N} y_{l,i}}{N}\\
+\bar{x_{r}} = \dfrac{\sum\limits_{i=1}^{N} x_{r,i}}{N}\\
+\bar{y_{r}} = \dfrac{\sum\limits_{i=1}^{N} y_{r,i}}{N}\\
+\sigma_{l} = \dfrac{\sqrt{\sum\limits_{i=1}^{N} (x_{l,i}-\bar{x_{l})^{2}+(y_{l,i}-\bar{y_{l})^{2}}}}}{N}\\
+\sigma_{r} = \dfrac{\sqrt{\sum\limits_{i=1}^{N} (x_{r,i}-\bar{x_{r})^{2}+(y_{r,i}-\bar{y_{r})^{2}}}}}{N}
+\end{eqnarray}
+\end{document}
