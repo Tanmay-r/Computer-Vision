@@ -1,0 +1,54 @@
+\title{Assignment 5: Quesion 1}
+\author{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,cancel}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem,color}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+\item This question is inspired from one of the questions that was asked in class. We will prove why the value of the coherence between $m \times n$ measurement matrix $\mathbf{\Phi}$ (with all rows normalized to unit magnitude) and $n \times n$ orthonormal representation matrix $\mathbf{\Psi}$ must lie within the range $(1,\sqrt{n})$. Recall that the coherence is given by the formula
+$\mu(\mathbf{\Phi},\mathbf{\Psi}) = \sqrt{n} \textrm{max}_{i,j \in \{0,1,...,n-1\}} |\mathbf{\Phi^i}^t \mathbf{\Psi_j}|$. 
+Proving the upper bound should be very easy for you. To prove the lower bound, proceed as follows. Consider a unit vector $\mathbf{g} \in \mathbb{R}^n$. We know that it can be expressed as $\mathbf{g} = \sum_{k=1}^n \alpha_k \mathbf{\Psi_k}$ as $\mathbf{\Psi}$ is an orthonormal \emph{basis}. Now prove that $\mu(\mathbf{\Psi},\mathbf{g}) = \textrm{max}_{i \in \{0,1,...,n-1\}} \dfrac{|\alpha_i|}{\sum_{j=1}^n \alpha^2_j}$. Exploiting the fact that $\mathbf{g}$ is a unit vector, prove that the minimal value of coherence is given by $\mathbf{g} = \sqrt{1/n} \sum_{k=1}^n \mathbf{\Psi_k}$ and hence the minimal value of coherence is 1. \textsf{[3 points]}
+
+\paragraph{Answer} The coherence is given by the formula \\
+\begin{align}
+\mu(\mathbf{\Phi},\mathbf{\Psi}) &= \sqrt{n} \textrm{max}_{i,j \in \{0,1,...,n-1\}} |\mathbf{\Phi^i}^t \mathbf{\Psi_j}| & \\
+\therefore \mu(\mathbf{\Phi},\mathbf{\Psi}) &= \sqrt{n} \textrm{max}_{i,j \in \{0,1,...,n-1\}} |\cos{\theta}_{i, j}| &\textrm{where $\theta_{i, j}$ is the angle between $\mathbf{\Phi^i}$ and $\mathbf{\Psi_j}$} \\
+\cos{\theta}_{i, j} &\le 1 & \\
+\therefore \textrm{max}_{i,j \in \{0,1,...,n-1\}} |\cos{\theta}_{i, j}| &\le 1 &\\
+\therefore \mu(\mathbf{\Phi},\mathbf{\Psi}) &\le \sqrt{n}
+\end{align}
+
+Hence, upper bound is proven.\\
+To prove the lower bound, consider a unit vector $\mathbf{g} \in \mathbb{R}^n$.\\
+Since $\mathbf{\Psi}$ is an orthonormal \emph{basis}, $\mathbf{g}$ can be expressed as $\mathbf{g} = \sum_{k=1}^n \alpha_k \mathbf{\Psi_k}$.\\
+\begin{align}
+\mu(\mathbf{\Psi},\mathbf{g}) &= \sqrt{n} \textrm{max}_{i \in \{0,1,...,n-1\}} |\mathbf{g}^t \mathbf{\Psi_i}| & \\
+&= \sqrt{n} \textrm{max}_{i \in \{0,1,...,n-1\}} |(\sum_{k=1}^n \alpha_k \mathbf{\Psi_k})^t \mathbf{\Psi_i}| & \\
+&= \sqrt{n} \textrm{max}_{i \in \{0,1,...,n-1\}} |\sum_{k=1}^n \alpha_k (\mathbf{\Psi_k}^t \mathbf{\Psi_i})| & \\
+&= \sqrt{n} \textrm{max}_{i \in \{0,1,...,n-1\}} |\alpha_i| & \because \textrm{$\mathbf{\Psi}$ is orthonormal and $\mathbf{g}$ is a unit vector} \\
+\sum_{j=1}^n \alpha^2_j &= 1 & \because \textrm{$\mathbf{g}$ is a unit vector}\\
+\textrm{Let, } \textrm{max}_{i \in \{0,1,...,n-1\}} |\alpha_i| &= \lambda \\
+\therefore \sum_{j=1}^n \alpha^2_j &\le n\lambda^2 & \textrm{with equality when $|\alpha_i| = \lambda$ for all $i$} \\
+\therefore 1 &\le n\lambda^2 \\
+\therefore \lambda &\ge \frac{1}{\sqrt{n}} \\
+\therefore \textrm{max}_{i \in \{0,1,...,n-1\}} |\alpha_i| &\ge \frac{1}{\sqrt{n}} \\
+\therefore \mu(\mathbf{\Psi},\mathbf{g}) &\ge 1
+\end{align}
+
+Therefore, $\mu(\mathbf{\Psi},\mathbf{g}) \ge 1$ when $|\alpha_i| = \lambda$ for all $i$.\\
+i.e. $|\alpha_i| = \lambda = \frac{1}{\sqrt{n}}$ \\
+i.e. $\mathbf{g} = \sqrt{1/n} \sum_{k=1}^n \mathbf{\Psi_k}$.
+
+
+\end{enumerate}
+
+
+
+\end{document}
