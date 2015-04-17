@@ -1,0 +1,127 @@
+\title{Assignment 3: Question 2: CS 763, Computer Vision}
+\author{}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,cancel}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{ulem,color}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\maketitle
+
+
+A very beautiful aspect of compressive sensing is the rigorous mathematical basis - in the form of concrete error bounds on reconstruction results. While using regularization to solve ill-posed problems is a known technique in computer vision and image processing, the existence of error bounds is a unique feature for compressive sensing problems. What is more, the proof of these stunning results is actually not super-hard, and any (motivated) graduate or undergraduate student with a basic knowledge of properties of vectors, and (more than) a little bit of patience, can easily follow the proofs. The purpose of this exercise is to take you through the proof of the following theorem proved by Emmanuel Candes: \textsf{[12 points]}
+\\
+\textbf{Theorem:} Let $\mathbf{y} = \mathbf{Ax}+\mathbf{\eta}$ be a vector of noisy compressed measurements where the matrix $\mathbf{A} \in \mathbb{R}^{m \times n},  m \ll n$ has restricted isometry constant $\delta_{2s} < \sqrt{2}-1$. Let the noise magnitude be upper bounded as $\|\mathbf{\eta}\|_2 \leq \epsilon$. Let $\mathbf{x}^{\star}$ be the solution to the problem $\textrm{min}_{\mathbf{x}} \|\mathbf{x}\|_1$ such that $\|\mathbf{y} - \mathbf{Af}\|_2 \leq \epsilon$. Then $\mathbf{x^{\star}}$ obeys 
+$\|\mathbf{x^{\star} - x}\|_2 \leq C_0 s^{-1/2}\|\mathbf{x - x_s}\|_1  + C_1 \epsilon$ where $C_0$ and $C_1$ are small-valued constants and $\mathbf{x_s}$ is a vector obtained by nullifying all entries of $\mathbf{x}$ except the $s$ entries with the largest absolute value. 
+\\
+\\
+The proof is given below. Your job is to trace through it, verifying every step, and then answering the questions presented in blue colored font. \emph{Ideally, edit the latex file itself and write your answer in blue colored font}.
+You will need to use the triangle inequality ($\|\mathbf{x}\|_2 + \|\mathbf{y}\|_2 \geq \|\mathbf{x}+\mathbf{y}\|_2$), the reverse triangle inequality ($\|\mathbf{x}-\mathbf{y}\|_2 \geq \|\mathbf{x}\|_2 - \|\mathbf{y}\|_2$), the Cauchy-Schwartz inequality (the dot product $|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\|_2 \|\mathbf{y}\|_2$) for vectors $\mathbf{x}$ and $\mathbf{y}$, and the restricted isometry property for $\mathbf{A}$. Also remember that $\|\mathbf{x}\|_1 = \sum_i |x_i|$, $\|\mathbf{x}\|_2 = \sqrt{\sum_i x^2_i}$ and $\|\mathbf{x}\|_{\infty} = \textrm{max}_i |x_i|$.
+\\
+\\
+\textbf{Proof:}
+\\
+\begin{enumerate}
+\item We can write the following result: $\|\mathbf{A(x-x^{\star})}\|_2 \leq 2\epsilon$. \textcolor{blue}{(How is this derived?)}
+\begin{eqnarray}\label{part1}
+\|\mathbf{A(x-x^{\star})}\|_2 = \|\mathbf{Ax-Ax^{\star}}\|_2 = \|\mathbf{y - \eta Ax^{\star}}\|_2 =  \|\mathbf{y - \eta -Ax^{\star}}\|_2 \leq \|\mathbf{y -Ax^{\star}}\|_2 + \|\eta\|_2 = 2\epsilon
+\end{eqnarray}
+\item Let us define vector $\mathbf{h} = \mathbf{x^{\star}-x}$. Let us denote vector $\mathbf{h_T}$ as the vector equal to $\mathbf{h}$ only on an index set $T$ and zero at all other indices. Let $T_0$ the set of indices containing the $s$ largest entries of $\mathbf{x}$ (in terms of absolute value), $T_1$ be the set of indices of the $s$ largest entries of \cancel{$\mathbf{x}$} \textcolor{red}{$\mathbf{h}_{T^c_0}$}, $T_2$ be the set of indices of the next $s$ largest entries of \cancel{$\mathbf{x}$}\textcolor{red}{$\mathbf{h}_{T^c_0}$} after $T_1$, and so on. We will now decompose $\mathbf{h}$ as the sum of $\mathbf{h_{T_0}}, \mathbf{h_{T_1}}, \mathbf{h_{T_2}}, ...$. We will denote the complement of an index set $T$ as $T^c$. Our aim will be to prove that both $\|\mathbf{h_{T_0 \cup T_1}}\|_2$ and $\|\mathbf{h_{(T_0 \cup T_1)^c}}\|_2$ are upper bounded by sensible and intuitive quantities. 
+\item We will first prove the bound on $\|\mathbf{h}_{(T_0 \cup T_1)^c}\|_2$, in the following way, using simple vector properties and the fact that $\mathbf{x+h}$ is the minimum of the objective function subject to the given constraint. 
+\begin{enumerate}
+\item We have $\|\mathbf{h}_{T_j}\|_2 \leq s^{1/2} \|\mathbf{h}_{T_j}\|_\infty \leq s^{-1/2} \|\mathbf{h}_{T_{j-1}}\|_1$. \textcolor{blue}{(Prove both these inequalities. Note that any element of $T_{j-1}$ is greater than or equal to any element of $T_j$ for any $j \geq 1$)}. \\
+Consider,
+\begin{eqnarray} \label{part3a}
+\sum\limits_{i\in T_{j}} h_{i}^{2} \leq  s\max_{i \in T_{j}} h_{i}^2
+\implies \|\mathbf{h}_{T_j}\|_2 \leq s^{1/2} \|\mathbf{h}_{T_j}\|_\infty\\
+\text{For every term in $h_{T_{j}}$ there exists a corresponding term in $h_{T_{j-1}}$ such that}
+|\mathbf{h}_{T_j,i}| \leq |\mathbf{h}_{T_{j-1,i}}|\\
+\forall i \in T_{j-1} \max_{k \in T_{j}} h_{T_{j},k} \leq h_{T_{j-1},i} \implies s \|\mathbf{h}_{T_j}\|_\infty \leq \|\mathbf{h}_{T_{j-1}}\|_1 \implies s^{1/2} \|\mathbf{h}_{T_j}\|_\infty \leq s^{-1/2}\|\mathbf{h}_{T_{j-1}}\|_1
+\end{eqnarray}
+\item Therefore $\sum_{j \geq 2}\|\mathbf{h}_{T_j}\|_2 \leq s^{-1/2} \|\mathbf{h}_{(T_0)^c}\|_1$. \textcolor{blue}{(Prove this inequality)}. 
+\begin{eqnarray} \label{part3b}
+\|\mathbf{h}_{(T_0)^c}\|_1 = \sum\limits_{j \geq 1} \|\mathbf{h}_{(T_{j}}\|_1
+\implies \text{ using ~\ref{part3a}} \quad \sum_{j \geq 2}\|\mathbf{h}_{T_j}\|_2 \leq s^{-1/2} \|\mathbf{h}_{(T_0)^c}\|_1
+\end{eqnarray}
+\item Hence we have $\|\mathbf{h}_{(T_0 \cup T_1)^c}\|_2 = \|\sum_{j \geq 2} \mathbf{h}_{T_j}\|_2 \leq \sum_{j \geq 2} \|\mathbf{h}_{T_j}\|_2 \leq s^{-1/2} \|\mathbf{h}_{(T_0)^c}\|_1$ (\textcolor{blue}{Prove both inequalities}).
+\begin{eqnarray}\label{part3c}
+\|\sum_{j \geq 2} \mathbf{h}_{T_j}\|_2 \leq \sum_{j \geq 2} \|\mathbf{h}_{T_j}\|_2 \quad \text{Cauchy-Schwarz Inequality}\\
+\sum_{j \geq 2} \|\mathbf{h}_{T_j}\|_2 \leq s^{-1/2} \|\mathbf{h}_{(T_0)^c}\|_1 \quad \text {using ~\ref{part3b}}
+\end{eqnarray}
+\item Now it turns out that $\|\mathbf{h}_{(T_0)^c}\|_1$ is not very large in value. Why so? As $\mathbf{x}^{\star}$ is the minimum, we have $\|\mathbf{x}\|_1 \geq \|\mathbf{x}+\mathbf{h}\|_1 = \sum_{i \in T_0} |x_i + h_i| + \sum_{i \in {(T_0)}^c} |x_i + h_i| \geq \|\mathbf{x}_{T_0}\|_1 - \|\mathbf{h}_{T_0}\|_1 + \|\mathbf{h}_{{(T_0)}^c}\|_1 - \|\mathbf{x}_{{(T_0)^c}}\|_1$ \textcolor{blue}{Prove the last inequality}. 
+\begin{eqnarray}
+\sum_{i \in T_0} |x_i + h_i| \geq  \|\mathbf{x}_{T_0}\|_1 - \|\mathbf{h}_{T_0}\|_1 \quad \text {using reverse triangle inequality on each component of x and h}\\
+\sum_{i \in {(T_0)}^c} |x_i + h_i| \geq \|\mathbf{h}_{{(T_0)}^c}\|_1 - \|\mathbf{x}_{{(T_0)^c}}\|_1 \quad \text{using reverse triangle inequality on each component of x and h}\\
+\therefore \|\mathbf{x}\|_1 \geq \|\mathbf{x}+\mathbf{h}\|_1 = \sum_{i \in T_0} |x_i + h_i| + \sum_{i \in {(T_0)}^c} |x_i + h_i| \geq \|\mathbf{x}_{T_0}\|_1 - \|\mathbf{h}_{T_0}\|_1 + \|\mathbf{h}_{{(T_0)}^c}\|_1 - \|\mathbf{x}_{{(T_0)^c}}\|_1
+\end{eqnarray}
+\item Rearranging the terms now gives us $\|\mathbf{h}_{{(T_0)}^c}\|_1 \leq \|\mathbf{h}_{{(T_0)}}\|_1  + 2\|\mathbf{x}_{{(T_0)^c}}\|_1 = \|\mathbf{h}_{{(T_0)}}\|_1  + 2\|\mathbf{x}-\mathbf{x_s}\|_1$. 
+\begin{eqnarray}\label{part3e}
+\|\mathbf{h}_{{(T_0)}^c}\|_1 \leq \|\mathbf{h}_{{(T_0)}}\|_1  + 2\|\mathbf{x}_{{(T_0)^c}}\|_1 = \|\mathbf{h}_{{(T_0)}}\|_1  + 2\|\mathbf{x}-\mathbf{x_s}\|_1
+\end{eqnarray}
+\item Combining everything, we now have $\|\mathbf{h}_{(T_0 \cup T_1)^c}\|_2 \leq s^{-1/2}(\|\mathbf{h}_{{(T_0)}}\|_1  + 2\|\mathbf{x}-\mathbf{x_s}\|_1) \leq \|\mathbf{h}_{{(T_0)}}\|_2 + \textcolor{red}{2}s^{-1/2} \|\mathbf{x}-\mathbf{x_s}\|_1$. \textcolor{blue}{(Prove the last inequality).}
+\begin{eqnarray}\label{part3f}
+\|\mathbf{h}_{(T_0 \cup T_1)^c}\|_2 \leq s^{-1/2}(\|\mathbf{h}_{{(T_0)}}\|_1  + 2\|\mathbf{x}-\mathbf{x_s}\|_1) \text{using ~\ref{part3c} and ~\ref{part3e}}\\
+\dfrac{\|\mathbf{h}_{{(T_0)}}\|_1}{s} \leq s^{-1/2}\|\mathbf{h}_{{(T_0)}}\|_2 \implies s^{-1/2}\|\mathbf{h}_{{(T_0)}}\|_1 \leq \|\mathbf{h}_{{(T_0)}}\|_2\\
+\therefore s^{-1/2}(\|\mathbf{h}_{{(T_0)}}\|_1  + 2\|\mathbf{x}-\mathbf{x_s}\|_1) \leq \|\mathbf{h}_{{(T_0)}}\|_2
+\end{eqnarray}
+\end{enumerate}
+\item We will now prove the bound on $\|\mathbf{h}_{(T_0 \cup T_1)}\|_2$, in the following way. 
+\begin{enumerate}
+\item We observe that $\mathbf{Ah_{T_0 \cup T_1}} = \mathbf{Ah} - \sum_{j \geq 2} \mathbf{Ah_{T_j}}$. \\
+Hence $\|\mathbf{Ah_{T_0 \cup T_1}}\|^2_2 = \langle \mathbf{Ah_{T_0 \cup T_1}} , \mathbf{Ah}\rangle - \langle \mathbf{Ah_{T_0 \cup T_1}} , \sum_{j \geq 2} \mathbf{Ah_{T_j}}\rangle$.
+\begin{eqnarray}\label{part4a}
+\|\mathbf{Ah_{T_0 \cup T_1}}\|^2_2 = \langle \mathbf{Ah_{T_0 \cup T_1}} , \mathbf{Ah}\rangle - \langle \mathbf{Ah_{T_0 \cup T_1}} , \sum_{j \geq 2} \mathbf{Ah_{T_j}}\rangle
+\end{eqnarray}
+\item Now, we have $|\langle \mathbf{Ah}_{T_0 \cup T_1} , \mathbf{Ah}\rangle| \leq \|\mathbf{Ah}_{T_0 \cup T_1}\|_2 \|\mathbf{Ah}\|_2 \leq 2 \epsilon \sqrt{1 + \textcolor{red}{\cancel{2}}\delta_{2s}} \|\mathbf{h}_{T_0 \cup T_1}\|_2$ \textcolor{blue}{(Prove both these inequalities, one of which uses the restricted isometry property of $\mathbf{A}$)}.
+\begin{eqnarray}\label{part4b}
+|\langle \mathbf{Ah}_{T_0 \cup T_1} , \mathbf{Ah}\rangle| \leq \|\mathbf{Ah}_{T_0 \cup T_1}\|_2 \|\mathbf{Ah}\|_2 \quad \text{using Cauchy-Schwarz Inequality}\\
+\|\mathbf{Ah}_{T_0 \cup T_1}\|_2 \|\mathbf{Ah}\|_2 \leq 2 \epsilon \sqrt{1 + \delta_{2s}} \|\mathbf{h}_{T_0 \cup T_1}\|_2 \quad \text{using Restricted Isometery Property $h = x-x\star$ and ~\ref{part1}}
+\end{eqnarray}
+\item We also have $|\langle \mathbf{Ah}_{T_0}, \mathbf{Ah}_{T_j}\rangle| \leq \delta_{2s} \|\mathbf{h}_{T_0}\|_2 \|\mathbf{h}_{T_j}\|_2$. To prove this, observe that $\mathbf{h_{T_0}}$ and $\mathbf{h_{T_j}}$ are vectors with disjoint support. $|\langle \mathbf{Ah}_{T_0}, \mathbf{Ah}_{T_j}\rangle| = \|\mathbf{h}_{T_0}\|_2 \|\mathbf{h}_{T_j}\|_2|\langle \mathbf{A\hat{h}}_{T_0}, \mathbf{A\hat{h}}_{T_j}\rangle|$  where $\mathbf{\hat{h}_{T_0}}$ and $\mathbf{\hat{h}_{T_j}}$ are unit-normalized vectors. This further yields $|\langle \mathbf{Ah}_{T_0}, \mathbf{Ah}_{T_j}\rangle|=\|\mathbf{h}_{T_0}\|_2 \|\mathbf{h}_{T_j}\|_2 \frac{\|\mathbf{A}(\mathbf{\hat{h}_{T_0}}+\mathbf{\hat{h}_{T_j}})\|^2 - \|\mathbf{A}(\mathbf{\hat{h}_{T_0}}-\mathbf{\hat{h}_{T_j}})\|^2}{4} 
+\\ \leq \|\mathbf{h}_{T_0}\|_2 \|\mathbf{h}_{T_j}\|_2 \frac{(1+\delta_{2s})(\|\mathbf{h_{T_0}}\|^2+\|\mathbf{h_{T_j}}\|^2)-(1-\delta_{2s})(\|\mathbf{h_{T_0}}\|^2+\|\mathbf{h_{T_j}}\|^2)}{4} \\
+= \delta_{2s} \|\mathbf{h}_{T_0}\|_2 \|\mathbf{h}_{T_j}\|_2$. Analogously, $|\langle \mathbf{Ah}_{T_1}, \mathbf{Ah}_{T_j}\rangle| \leq \delta_{2s} \|\mathbf{h}_{T_1}\|_2 \|\mathbf{h}_{T_j}\|_2$. 
+\begin{equation}\label{part4c}
+|\langle \mathbf{Ah}_{T_0}, \mathbf{Ah}_{T_j}\rangle| \leq \delta_{2s} \|\mathbf{h}_{T_0}\|_2 \|\mathbf{h}_{T_j}\|_2
+\end{equation}
+\item Now, we have $(1-\delta_{2s})\|\mathbf{h}_{T_0 \cup T_1}\|^2_2 
+\leq \|\mathbf{Ah}_{T_0 \cup T_1}\|^2_2 \leq 2 \epsilon \sqrt{1+\delta_{2s}}\|\mathbf{h}_{T_0 \cup T_1}\|_2 + \delta_{2s}(\|\mathbf{h}_{T_0}\|_2 + \|\mathbf{h}_{T_1}\|_2) \sum_{j \geq 2} \|\mathbf{h}_{T_j}\|_2$. \textcolor{blue}{(Prove this).} Furthermore, we can write $(1-\delta_{2s})\|\mathbf{h}_{T_0 \cup T_1}\|^2_2  \leq \|\mathbf{h}_{T_0 \cup T_1}\|_2(2\epsilon\sqrt{1+2\delta_{2s}}) + \sqrt{2}\delta_{2s} \sum_{j \geq 2} \|\mathbf{h}_{T_j}\|_2)$ because $\mathbf{h}_{T_0}$ and $\mathbf{h}_{T_1}$ are vectors with disjoint sets of non-zero indices and hence $\|\mathbf{h}_{T_0}\|_2 + \|\mathbf{h}_{T_1}\|_2 \leq \sqrt{2} \|\mathbf{h}_{T_0 \cup T_1}\|_2$.
+\begin{equation}\label{part4d}
+\begin{aligned}
+(1-\delta_{2s})\|\mathbf{h}_{T_0 \cup T_1}\|^2_2 
+ & \leq  \|\mathbf{Ah}_{T_0 \cup T_1}\|^2_2  \quad \text{using the RIP property}\\
+\|\mathbf{Ah}_{T_0 \cup T_1}\|^2_2 &= |\langle \mathbf{Ah}_{T_0 \cup T_1} , \mathbf{Ah} - \mathbf{Ah}_{(T_{0} \cup T_{1})^c} \rangle|\\ &=  |\langle \mathbf{Ah}_{T_0 \cup T_1} , \mathbf{Ah}\rangle| - |\langle \mathbf{Ah}_{T_0 \cup T_1} , \mathbf{Ah}_{(T_{0} \cup T_{1})^c} \rangle|\\
+&\leq |\langle \mathbf{Ah}_{T_0 \cup T_1} , \mathbf{Ah}\rangle| + | |\langle \mathbf{Ah}_{T_0 \cup T_1} , \mathbf{Ah}_{(T_{0} \cup T_{1})^c} \rangle| |\\ &= 2 \epsilon \sqrt{1+\delta_{2s}}\|\mathbf{h}_{T_0 \cup T_1}\|_2  + \delta_{2s} \sum\limits_{j\geq 2} \|\mathbf{h}_{T_j}\|_2 \|\mathbf{h}_{T_0}\|_2 + \delta_{2s} \sum\limits_{j\geq 2} \|\mathbf{h}_{T_j}\|_2 \|\mathbf{h}_{T_1}\|_2\\
+&= 2 \epsilon \sqrt{1+\delta_{2s}}\|\mathbf{h}_{T_0 \cup T_1}\|_2 + \delta_{2s}(\|\mathbf{h}_{T_0}\|_2 + \|\mathbf{h}_{T_1}\|_2) \sum_{j \geq 2} \|\mathbf{h}_{T_j}\|_2\\
+& \text{using ~\ref{part4c} and ~\ref{part4b}}
+\end{aligned}
+\end{equation}
+\item Rearranging the above equation, and using one of the previous results (\textcolor{blue}{which one? = ~\ref{part3f}}), 
+we get $\|\mathbf{h}_{T_0 \cup T_1}\|_2 \leq \epsilon \dfrac{2\sqrt{1+\delta_{2s}}}{1-\delta_{2s}} + \dfrac{\sqrt{2}\sqrt{\delta_{2s}}}{1-\delta_{2s}} s^{-1/2} \|\mathbf{h}_{(T_0)^c}\|_1 
+\\ \leq \epsilon \dfrac{2\sqrt{1+\delta_{2s}}}{1-\delta_{2s}} + \dfrac{\sqrt{2}\textcolor{red}{\cancel{\sqrt{\delta_{2s}}}} \textcolor{red}{\delta_{2s}}}{1-\delta_{2s}} \|\mathbf{h}_{T_0 \cup T_1}\|_2 + \dfrac{\sqrt{2}\delta_{2s}\textcolor{red}{\cancel{\sqrt{\delta_{2s}}}}}{1-\delta_{2s}} s^{-1/2} \|\mathbf{x}-\mathbf{x_s}\|_1$. Further rearranging gives us
+$\|\mathbf{h}_{T_0 \cup T_1}\|_2  \leq C' \epsilon + C'' s^{-1/2} \|\mathbf{x}-\mathbf{x_s}\|_1$ where $C'$ and $C''$ are constants that depend only on $\delta_{2s}$ (note in particular that they do not depend on $n$).
+\begin{equation}\label{part4e}
+\begin{aligned}
+\|\mathbf{h}_{T_0 \cup T_1}\|_2 & \leq \epsilon \dfrac{2\sqrt{1+\delta_{2s}}}{1-\delta_{2s}} + \dfrac{\sqrt{2}\sqrt{\delta_{2s}}}{1-\delta_{2s}} s^{-1/2} \|\mathbf{h}_{(T_0)^c}\|_1 
+\\ & \leq \epsilon \dfrac{2\sqrt{1+\delta_{2s}}}{1-\delta_{2s}} + \dfrac{\sqrt{2}\delta_{2s}}{1-\delta_{2s}} \|\mathbf{h}_{T_0 \cup T_1}\|_2 + \dfrac{\sqrt{2}\delta_{2s}}{1-\delta_{2s}} s^{-1/2} \|\mathbf{x}-\mathbf{x_s}\|_1\\ &\leq \epsilon \dfrac{2\sqrt{1+\delta_{2s}}}{1-\delta_{2s}} \dfrac{1-\delta_{2s}}{1-\delta_{2s} -\sqrt{2}\delta_{2s}} +  \dfrac{\sqrt{2}\delta_{2s}}{1-\delta_{2s}} s^{-1/2}\dfrac{1-\delta_{2s}}{1-\delta_{2s} -\sqrt{2}\delta_{2s}} \|\mathbf{x}-\mathbf{x_s}\|_1\\
+&=\epsilon \dfrac{2\sqrt{1+\delta_{2s}}}{1-\delta_{2s} -\sqrt{2}\delta_{2s}} + s^{-1/2} \dfrac{\sqrt{2}\delta_{2s}}{1-\delta_{2s} -\sqrt{2}\delta_{2s}} \|\mathbf{x}-\mathbf{x_s}\|_1
+\end{aligned}
+\end{equation}
+\end{enumerate}
+\item Now, we combine the upper bounds on $\|\mathbf{h}_{(T_0 \cup T_1)}\|_2$ and $\|\mathbf{h}_{(T_0 \cup T_1)^c}\|_2$ to yield the final result as follows: \\
+$\|\mathbf{h}\|_2 \leq \|\mathbf{h}_{T_0 \cup T_1}\|_2 + \|\mathbf{h}_{(T_0 \cup T_1)^c}\|_2 \leq \|\mathbf{h}_{T_0 \cup T_1}\|_2 + \|h_{T_0}\|_2 + 2s^{-1/2}\|\mathbf{x}-\mathbf{x_s}\|_1 \\
+\leq 2 \|\mathbf{h}_{T_0 \cup T_1}\|_2 + 2\textcolor{red}{s^{-1/2}}\|\mathbf{x}-\mathbf{x_s}\|_1 \leq C_0 s^{-1/2} \|\mathbf{x}-\mathbf{x_s}\|_1 + C_1 \epsilon$ \textcolor{blue}{(Justify all these inequalities. Write the final expression for $C_0$ and $C_1$ and explain where the sufficient condition $\delta_{2s} \leq \sqrt{2}-1$ arises)}.
+\begin{eqnarray}
+\|\mathbf{h}\|_2 \leq \|\mathbf{h}_{T_0 \cup T_1}\|_2 + \|\mathbf{h}_{(T_0 \cup T_1)^c}\|_2 \text{cauchy  schwarz}\\
+\|\mathbf{h}_{T_0 \cup T_1}\|_2 + \|\mathbf{h}_{(T_0 \cup T_1)^c}\|_2 \leq \|\mathbf{h}_{T_0 \cup T_1}\|_2 + \|h_{T_0}\|_2 + 2s^{-1/2}\|\mathbf{x}-\mathbf{x_s}\|_1 \text {using ~\ref{part3f}}\\
+\|\mathbf{h}_{T_0 \cup T_1}\|_2 + \|h_{T_0}\|_2 + 2s^{-1/2}\|\mathbf{x}-\mathbf{x_s}\|_1 \\
+\leq  \|\mathbf{h}_{T_0 \cup T_1}\|_2+ \|\mathbf{h}_{T_0 \cup T_1}\|_2 + 2\textcolor{red}{s^{-1/2}}\|\mathbf{x}-\mathbf{x_s}\|_1\\ 
+2 \|\mathbf{h}_{T_0 \cup T_1}\|_2 + 2\textcolor{red}{s^{-1/2}}\|\mathbf{x}-\mathbf{x_s}\|_1 \leq C_0 s^{-1/2} \|\mathbf{x}-\mathbf{x_s}\|_1 + C_1 \epsilon \quad \text{using ~\ref{part4e}}\\
+C_{0} = \dfrac{2\sqrt{2}\delta_{2s}}{1-\delta_{2s} -\sqrt{2}\delta_{2s}} + 2\\
+C_{1} = \dfrac{2*2\sqrt{1+\delta_{2s}}}{1-\delta_{2s} -\sqrt{2}\delta_{2s}}
+\end{eqnarray}
+\end{enumerate}
+
+\end{document}

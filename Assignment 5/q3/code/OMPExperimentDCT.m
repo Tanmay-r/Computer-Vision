@@ -1,4 +1,4 @@
-% Extract all overlapping patches of size 8 × 8 from the barbara image
+cd% Extract all overlapping patches of size 8 × 8 from the barbara image
 img  = imread('../data/barbara256.png');
 img = double(img)/255;
 x = size(img, 1);
@@ -38,12 +38,11 @@ for f_val=1:size(f,2)
 
     % Use OMP to recover patches
     'Recovering Patches...'
-    U = kron(dctmtx(8)', dctmtx(8)');
     patchesRecovered = zeros(numPatches, 64);
     for i=1:numPatches
         i
-        [theta] = OMP(y(i, :), phi_m*U, m);
-        patchesRecovered(i, :) = U*theta;    
+        [theta] = OMP(y(i, :), phi_m, m);
+        patchesRecovered(i, :) = theta;    
     end
 
     % Reconstruct Image
