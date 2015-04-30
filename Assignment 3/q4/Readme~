@@ -1,0 +1,12 @@
+Put the original videos in data/stable directory.
+Run the myDriver Script in code directory
+
+
+Currently the script works for cars.avi.
+If you want to make it work of coastgaurd replace cars with coastgaurd in all the files.
+
+There should be a directory called shaky in data folder
+
+Put the cars.avi file in data/stable folder
+
+Put the files that are present on the homework link in the code directory. I am removing libavbin.so, libavbin.so.64 libavbin.so.32 files due to size limitations

@@ -1,0 +1,8 @@
+Put the original videos in data/stable directory.
+Run the myDriver Script in code directory
+
+
+Currently the script works for cars.avi.
+If you want to make it work of coastgaurd replace cars with coastgaurd in all the files.
+
+There should be a directort shaky in data folder
